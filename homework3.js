@@ -47,3 +47,25 @@ function task4(str) {
     return arr[index];
 
 }
+//task 5
+
+function task5(str){
+    let index =0;
+    let substring;
+    let maxlength =0;
+    let result =""
+    for(let i =0;i< str.length;i++){
+        substring=str.slice(index,i)
+    if(substring.includes(str[i])){
+        {if(substring.length > maxlength)
+            maxlength = substring.length
+            result = substring;
+        }
+        index = i
+    }
+                
+        
+      
+    }    
+    return result
+    }
