@@ -29,3 +29,21 @@ stringCount++
 }
 console.log(`Numbers: ${numberCount}, Strings: ${stringCount}`)
 }
+
+//task4
+function task4(str) {
+    let arr = str.split(" ")
+    let arrOfLength = []
+    arr.forEach(lengthOfString)
+
+    function lengthOfString(item) {
+        arrOfLength.push(item.length)
+    }
+
+
+    let sortedArr = arrOfLength.slice();
+    sortedArr.sort(function (x, y) { return (y - x) });
+    let index = arrOfLength.lastIndexOf(sortedArr[0])
+    return arr[index];
+
+}
