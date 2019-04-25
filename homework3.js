@@ -69,3 +69,69 @@ function task5(str){
     }    
     return result
     }
+
+//task 6
+
+function task6(str){
+    let result =""
+    let substring =""
+    let i =0;
+    while( i< str.length){
+        if((str.length-i)/3 >= 1){
+        substring = str[i +1] + str[i+2] + str[i]
+        result += substring
+        i = i+3
+        } else{
+            result += str.slice(i)
+            break;
+        }
+
+    }
+    return result
+}
+
+function task7(arr){
+    let result = 1
+    let positive = 0
+    if(arr.length <2){
+        return "Invalid Argument"
+    } else{
+    arr.forEach(element)
+    function element(item){
+    
+       let sortedArr = item.slice()
+       sortedArr.sort(function (x, y) { return (x - y) });
+       if(sortedArr[0]<0){
+           result *=sortedArr[0]
+       } else{
+           positive++           
+       }
+
+    }
+    if(positive === arr.length){
+        return "No negatives"
+    } else {
+        return result
+    }
+
+   
+}
+}
+//task8
+function task8(arr){
+    result = []
+    if(arr.length<=3){
+        result.push(arr);
+    } else{
+        for(let i = 1; i< arr.length;i++){
+            for(let j = 2; j<arr.length;j++){
+                result.push(arr[0],arr[i],arr[j])
+            }
+        }
+        arr.shift();
+        result = result + task8(arr)
+        
+    }
+return result
+    
+}
