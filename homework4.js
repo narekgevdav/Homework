@@ -38,6 +38,22 @@ if(arr.length > 0){
     return "Such numbers does not exist."
 }
 }
+//task3 not finished
+function task3(num){
+    let result = 1;
+    if(num.length=1){
+        if(num%2 === 1){
+           result *=1;
+        }
+        else{
+             result *=0
+        }
+    } else {
+        result = result*(num%2)*(task3(Math.floor(num/10)))
+    }
+    return (result ===1)
+
+}
 
 //task 5
 
