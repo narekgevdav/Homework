@@ -38,10 +38,10 @@ if(arr.length > 0){
     return "Such numbers does not exist."
 }
 }
-//task3 not finished
+//task 3
 function task3(num){
     let result = 1;
-    if(num.length=1){
+    if(String(num).length===1){
         if(num%2 === 1){
            result *=1;
         }
@@ -49,7 +49,11 @@ function task3(num){
              result *=0
         }
     } else {
+        if(num%2 ===1){
         result = result*(num%2)*(task3(Math.floor(num/10)))
+        }else {
+            result *=0
+        }
     }
     return (result ===1)
 
