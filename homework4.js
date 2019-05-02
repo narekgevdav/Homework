@@ -59,6 +59,29 @@ function task3(num){
 
 }
 
+
+//task 4
+
+function task4(arr, result = Number.POSITIVE_INFINITY,thereIsPositive=false){
+        if(arr.length===0){
+        if(thereIsPositive){
+            console.log(result)
+        } else {
+            console.log(-1)
+        }
+    } else{
+        if(arr[0]>= 0 && arr[0]<result){
+            thereIsPositive = true
+            result=arr[0]
+            arr.shift()
+            task4(arr,result,thereIsPositive)
+        } else{
+            arr.shift()
+            task4(arr,result,thereIsPositive)
+        }
+    }
+}
+
 //task 5
 
 function task5(arr){
