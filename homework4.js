@@ -65,19 +65,19 @@ function task3(num){
 function task4(arr, result = Number.POSITIVE_INFINITY,thereIsPositive=false){
         if(arr.length===0){
         if(thereIsPositive){
-            console.log(result)
+           return result
         } else {
-            console.log(-1)
+            return -1
         }
     } else{
         if(arr[0]>= 0 && arr[0]<result){
             thereIsPositive = true
             result=arr[0]
             arr.shift()
-            task4(arr,result,thereIsPositive)
+            return  task4(arr,result,thereIsPositive)
         } else{
             arr.shift()
-            task4(arr,result,thereIsPositive)
+            return  task4(arr,result,thereIsPositive)
         }
     }
 }
