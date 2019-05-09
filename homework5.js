@@ -56,3 +56,13 @@ function task4(arr, num) {
     }
     return arr;
 }
+//task6
+function task(arr) {	
+	let read = arr.filter(function(book) {
+		return book.readStatus;
+	})
+
+	return read.sort(function(x, y) {
+		return x.percent - y.percent;
+	})
+}
