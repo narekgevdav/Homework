@@ -41,3 +41,18 @@ function task3(num,sum=0){
     return num
 }
 }
+
+    
+//task4
+function task4(arr, num) {
+    if(num != 0) {
+        if(num > 0) {
+            arr.push(arr.shift());
+            return task4(arr, --num);
+        } else {
+            arr.unshift(arr.pop());
+            return task4(arr, ++num);
+        }
+    }
+    return arr;
+}
