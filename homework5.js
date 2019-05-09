@@ -27,3 +27,17 @@ function task2(arr, result = []){
     return result
 
 }
+
+//task3
+
+function task3(num,sum=0){
+    
+    if(num>10){
+    for(let i=0;i<String(num).length;i++){
+    sum += Number(String(num)[i])
+    }
+    return task3(sum)
+}   else{
+    return num
+}
+}
