@@ -29,7 +29,7 @@ class Author{
     }
 }
 
-class Book extends Author{
+class Book {
     constructor(title,Author,price,quantity){
         this.title = title;
         this.Author = Author
@@ -52,12 +52,15 @@ class Book extends Author{
     get quantity(){
         return this._quantity
     }
-    set price(value){
+    set quantity(value){
         this._quantity = value    
     }
     getProfit(){
         return this.price*this.quantity
-    }   
+    }
+    toString(){
+        return `The profit of ${this.title} from ${this.Author.name} is ${getProfit()}
+    }
 }
 
 
