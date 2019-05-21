@@ -64,3 +64,45 @@ class Book {
 }
 
 
+//task 2
+
+class Account{
+    constructor(id,name,balance){
+        this._id = id
+        this._name = name
+        this._balance = balance
+    }
+    get id(){
+        return this.id
+    }
+    set id(value){
+        this.id_id=value
+    }
+    get name(){
+        return this.name
+    }
+    set name(value){
+        this.name=value
+    }get balance(){
+        return this.balance
+    }
+    set balance(value){
+        this.balance=value
+    }
+    credit(amount){
+        return this._balance+amount
+    }
+    debit(amount){
+        if(amount <= this._balance){
+            return this._balance-amount
+        } else {
+            return `Amount exceeded balance`
+        }
+    }
+    transferTo(anotherAccount, amount){
+        this.debit(amount)
+        anotherAccount.balance += amount
+    }
+
+
+}
