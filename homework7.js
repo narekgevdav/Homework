@@ -2,9 +2,9 @@
 
 class Author{
     constructor(name,email,gender){
-        this.name = name;
-        this.email = email;
-        this.gender = gender;
+        this._name = name;
+        this._email = email;
+        this._gender = gender;
     }
     get name(){
         return this._name
@@ -31,10 +31,10 @@ class Author{
 
 class Book {
     constructor(title,Author,price,quantity){
-        this.title = title;
-        this.Author = Author
-        this.price = price;
-        this.quantity = quantity;
+        this._title = title;
+        this._Author = Author
+        this._price = price;
+        this._quantity = quantity;
     }
     get title(){
         return this._title
@@ -56,10 +56,10 @@ class Book {
         this._quantity = value    
     }
     getProfit(){
-        return this.price*this.quantity
+        return this._price*this._quantity
     }
     toString(){
-        return `The profit of ${this.title} from ${this.Author.name} is ${getProfit()}
+        return `The profit of ${this._title} from ${this._Author.name} is ${getProfit()}
     }
 }
 
@@ -73,21 +73,21 @@ class Account{
         this._balance = balance
     }
     get id(){
-        return this.id
+        return this._id
     }
     set id(value){
-        this.id_id=value
+        this._id=value
     }
     get name(){
-        return this.name
+        return this._name
     }
     set name(value){
-        this.name=value
+        this._name=value
     }get balance(){
-        return this.balance
+        return this._balance
     }
     set balance(value){
-        this.balance=value
+        this._balance=value
     }
     credit(amount){
         return this._balance+amount
@@ -101,7 +101,7 @@ class Account{
     }
     transferTo(anotherAccount, amount){
         this.debit(amount)
-        anotherAccount.balance += amount
+        anotherAccount._balance += amount
     }
 
 
