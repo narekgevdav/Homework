@@ -25,14 +25,14 @@ class Author{
         this._gender = value
     }
     toString(){
-        return `The email of ${this.name} is ${this.email}`
+        return `The email of ${this._name} is ${this._email}`
     }
 }
 
 class Book {
-    constructor(title,Author,price,quantity){
+    constructor(title,author,price,quantity){
         this._title = title;
-        this._Author = Author
+        this._author = author
         this._price = price;
         this._quantity = quantity;
     }
@@ -48,6 +48,12 @@ class Book {
     set price(value){
         this._price = value    
     }
+    get author(){
+        return this._author
+    }
+    set author(value){
+        this._author = value    
+    }
     
     get quantity(){
         return this._quantity
@@ -59,7 +65,7 @@ class Book {
         return this._price*this._quantity
     }
     toString(){
-        return `The profit of ${this._title} from ${this._Author.name} is ${getProfit()}
+        return `The profit of ${this._title} from ${this._author.name} is ${getProfit()}
     }
 }
 
@@ -90,11 +96,11 @@ class Account{
         this._balance=value
     }
     credit(amount){
-        return this._balance+amount
+        return this._balance = this._balance+amount
     }
     debit(amount){
         if(amount <= this._balance){
-            return this._balance-amount
+            return this._balance = this._balance-amount
         } else {
             return `Amount exceeded balance`
         }
