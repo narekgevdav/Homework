@@ -71,7 +71,6 @@ class Book {
 
 
 //task 2
-
 class Account{
     constructor(id,name,balance){
         this._id = id
@@ -109,6 +108,112 @@ class Account{
         this.debit(amount)
         anotherAccount._balance += amount
     }
+    static indentifyAccount(accountFirst,accountSecond){
+        return (accountFirst._name === accountSecond._name && accountFirst._id === accountSecond._id && accountFirst._balance === accountSecond._balance)
+    }
+    toString(){
+        return `the balance of ${this._name}'s account is ${this._balance}`
+    }
+}
 
+//task3
 
+class Person{
+    constructor(firstName, lastName,gender,age){
+        this._firstName = firstName;
+        this._lastName = lastName;
+        this._gender = gender
+        this._age = age 
+    }
+    get firstName(){
+        return this._firstName
+    }
+    set firstName(value){
+        this._firstName = value
+    }
+    get lastName(){
+        return this._lastName
+    }
+    set lastName(value){
+        this._lastName = value
+    }
+    get gender(){
+        return this._gender
+    }
+    set gender(value){
+        this._gender = value
+    }
+    get age(){
+        return this._age
+    }
+    set age(value){
+        this._age = value
+    }
+    toString(){
+        ` return ${this._firstName} ${this._lastName} is ${this._age} years old`
+    }
+
+}
+
+class Student extends Person{
+    constructor(firstName, lastName,gender,age,program,year,fee){
+        super();
+        this._program = program
+        this._year = year
+        this._fee = fee
+    }
+    get program(){
+        return this._program
+    }
+    set program(value){
+        this._program = value
+    }
+    get year(){
+        return this._year
+    }
+    set year(value){
+        this._year = value
+    }
+    get fee(){
+        return this._fee
+    }
+    set fee(value){
+        this._fee = value
+    }
+    passExam(program,grade){
+        if(this._program.indexOf(program)===-1){
+            return `invalid program`
+        } else {
+            if(grade >=50){
+                this._program.splice(this._program.indexOf(program),1)
+            }
+        }
+        if(this._program.length === 0){
+            this._year++
+        }
+    }
+    
+}
+
+class Teacher extends Person{
+    constructor(firstName, lastName,gender,age,program,pay){
+        super();
+        this._program = program;
+        this._pay = pay; 
+    }
+    get program(){
+        return this._program
+    }
+    set program(value){
+        this._program = value
+    }
+    get pay(){
+        return this._pay
+    }
+    set pay(value){
+        this._pay = value
+    }
+    toString(){
+        return `the techer of ${this._program} earns ${pay}`
+    }
 }
