@@ -14,6 +14,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+
 
 import firebase from 'firebase'
 
@@ -44,15 +48,19 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    close: {
+        padding: theme.spacing(0.5),
+    },
 }));
 
 export default function SignInSide(props) {
     const classes = useStyles();
     const [name, setName] = useState();
-    const [login, setLogin] = useState();    
+    const [login, setLogin] = useState();
     const [password, setPassword] = useState();
     const [verifyPassword, setVerifyPassword] = useState();
-    const [open, setOpen] = useState(false)
+    const [open,setOpen] = React.useState();
+
     function myname(event) {
         setName(event.target.value)
     };
@@ -65,97 +73,131 @@ export default function SignInSide(props) {
     function myverifypass(event) {
         setVerifyPassword(event.target.value)
     };
+    function showError() {
+        setOpen(true);
+    }
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    }
     let us;
     function signup() {
         if(password === verifyPassword){
-        firebase.auth().createUserWithEmailAndPassword(login, password).then(function(user){us=user;window.location.replace('/edit')})
-        .catch(function(error){console.log(error)})
+            firebase.auth().createUserWithEmailAndPassword(login, password).then.then(
+                firebase.auth().currentUser.updateProfile({
+                    displayName: name
+                })
+            )(function(user){us=user;window.location.replace('/edit')})
+                .catch(function(error){console.log(error)})
         }
-        else setOpen(true)
+        else {
+            showError();
+        }
     }
     return (<div>
-      
+
         <Grid container component="main" className={classes.root}>
-            <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
-          </Typography>
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            onChange={myname}
-                            id="name"
-                            label="Name"
-                            name="name"
-                            autoComplete="name"
-                            autoFocus
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            onChange={mylogin}
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            n
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            onChange={mypass}
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                         <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            onChange={myverifypass}
-                            name="verifyPassword"
-                            label="Verify Password"
-                            type="password"
-                            id="verifyPassword"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            fullWidth
-                            onClick={signup}
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign up
-            </Button>
-            <Snackbar
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    >
-                        password don't match
-                    </Snackbar>
-            
-                        {/* <Grid container>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+    <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+        <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+        Sign up
+    </Typography>
+    <form className={classes.form} noValidate>
+    <TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    onChange={myname}
+    id="name"
+    label="Name"
+    name="name"
+    autoComplete="name"
+    autoFocus
+    />
+    <TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    onChange={mylogin}
+    id="email"
+    label="Email Address"
+    name="email"
+    autoComplete="email"
+    n
+    />
+    <TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    onChange={mypass}
+    name="password"
+    label="Password"
+    type="password"
+    id="password"
+    autoComplete="current-password"
+        />
+        <TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    onChange={myverifypass}
+    name="verifyPassword"
+    label="Verify Password"
+    type="password"
+    id="verifyPassword"
+    autoComplete="current-password"
+        />
+        <FormControlLabel
+    control={<Checkbox value="remember" color="primary" />}
+    label="Remember me"
+        />
+        <Button
+    fullWidth
+    onClick={signup}
+    variant="contained"
+    color="primary"
+    className={classes.submit}
+        >
+        Sign up
+    </Button>
+        <Snackbar
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            ContentProps={{
+                'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">passwords don't match</span>}
+            action={[
+                <IconButton
+                    key="close"
+                    aria-label="close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={handleClose}
+                >
+                    <CloseIcon />
+                </IconButton>,
+            ]}
+        />
+
+    {/* <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
                                     Forgot password?
@@ -166,12 +208,11 @@ export default function SignInSide(props) {
                                     Have an account</Link>
                             </Grid>
                         </Grid> */}
-                        <Box mt={5}>
-
-                        </Box>
-                    </form>
-                </div>
-            </Grid>
+<Box mt={5}>
+        </Box>
+        </form>
+        </div>
         </Grid>
-    </div>);
+        </Grid>
+        </div>);
 }
