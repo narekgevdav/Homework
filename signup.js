@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(https://source.unsplash.com/random/?books)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -60,6 +60,7 @@ export default function SignInSide(props) {
     const [password, setPassword] = useState();
     const [verifyPassword, setVerifyPassword] = useState();
     const [open,setOpen] = React.useState();
+    const [err, setErr] = useState();
 
     function myname(event) {
         setName(event.target.value)
@@ -86,14 +87,22 @@ export default function SignInSide(props) {
     let us;
     function signup() {
         if(password === verifyPassword){
-            firebase.auth().createUserWithEmailAndPassword(login, password).then.then(
-                firebase.auth().currentUser.updateProfile({
-                    displayName: name
-                })
-            )(function(user){us=user;window.location.replace('/edit')})
-                .catch(function(error){console.log(error)})
-        }
-        else {
+            firebase.auth().createUserWithEmailAndPassword(login, password)
+            .then(()=>{
+                if(firebase.auth().currentUser !== null){
+                    firebase.auth().currentUser.updateProfile({
+                        displayName: name
+                        })
+                    }
+                }
+            )
+            .catch(function(error){
+                console.log(error.message)
+                setErr(error.message);
+                setOpen(true);
+            })
+        } else {
+            setErr("Passwords don't");
             showError();
         }
     }
@@ -183,7 +192,7 @@ export default function SignInSide(props) {
             ContentProps={{
                 'aria-describedby': 'message-id',
             }}
-            message={<span id="message-id">passwords don't match</span>}
+            message={<span id="message-id">{err}</span>}
             action={[
                 <IconButton
                     key="close"
