@@ -84,129 +84,144 @@ export default function SignInSide(props) {
 
         setOpen(false);
     }
-    let us;
+    function handleKeyPress(e){
+        if(e.charCode === 13){
+            signup();
+        }
+    }
     function signup() {
-        if(password === verifyPassword){
-            firebase.auth().createUserWithEmailAndPassword(login, password)
-            .then(()=>{
-                if(firebase.auth().currentUser !== null){
-                    firebase.auth().currentUser.updateProfile({
-                        displayName: name
-                        })
-                    }
-                }
-            )
-            .catch(function(error){
-                console.log(error.message)
-                setErr(error.message);
-                setOpen(true);
-            })
-        } else {
-            setErr("Passwords don't");
+        if(!name){
+            setErr("Please Enter Your Name");
             showError();
+        }
+        else if(!login){
+            setErr("Please Enter Your Email");
+            showError();
+        }   else if (password !== verifyPassword){
+            setErr("Passwords Don't Match");
+            showError();
+        } else {
+            firebase.auth().createUserWithEmailAndPassword(login, password)
+                .then(()=>{
+                        if(firebase.auth().currentUser !== null){
+                            firebase.auth().currentUser.updateProfile({
+                                displayName: name
+                            })
+                        }
+                    }
+                )
+                .catch(function(error){
+                    console.log(error.message)
+                    setErr(error.message);
+                    setOpen(true);
+                })
         }
     }
     return (<div>
 
         <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-    <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-        Sign up
-    </Typography>
-    <form className={classes.form} noValidate>
-    <TextField
-    variant="outlined"
-    margin="normal"
-    required
-    fullWidth
-    onChange={myname}
-    id="name"
-    label="Name"
-    name="name"
-    autoComplete="name"
-    autoFocus
-    />
-    <TextField
-    variant="outlined"
-    margin="normal"
-    required
-    fullWidth
-    onChange={mylogin}
-    id="email"
-    label="Email Address"
-    name="email"
-    autoComplete="email"
-    n
-    />
-    <TextField
-    variant="outlined"
-    margin="normal"
-    required
-    fullWidth
-    onChange={mypass}
-    name="password"
-    label="Password"
-    type="password"
-    id="password"
-    autoComplete="current-password"
-        />
-        <TextField
-    variant="outlined"
-    margin="normal"
-    required
-    fullWidth
-    onChange={myverifypass}
-    name="verifyPassword"
-    label="Verify Password"
-    type="password"
-    id="verifyPassword"
-    autoComplete="current-password"
-        />
-        <FormControlLabel
-    control={<Checkbox value="remember" color="primary" />}
-    label="Remember me"
-        />
-        <Button
-    fullWidth
-    onClick={signup}
-    variant="contained"
-    color="primary"
-    className={classes.submit}
-        >
-        Sign up
-    </Button>
-        <Snackbar
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-            }}
-            open={open}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            ContentProps={{
-                'aria-describedby': 'message-id',
-            }}
-            message={<span id="message-id">{err}</span>}
-            action={[
-                <IconButton
-                    key="close"
-                    aria-label="close"
-                    color="inherit"
-                    className={classes.close}
-                    onClick={handleClose}
-                >
-                    <CloseIcon />
-                </IconButton>,
-            ]}
-        />
+            <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+                    <form className={classes.form} noValidate>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            onChange={myname}
+                            onKeyPress={handleKeyPress}
+                            id="name"
+                            label="Name"
+                            name="name"
+                            autoComplete="name"
+                            autoFocus
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            onChange={mylogin}
+                            onKeyPress={handleKeyPress}
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            n
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            onChange={mypass}
+                            onKeyPress={handleKeyPress}
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            onChange={myverifypass}
+                            onKeyPress={handleKeyPress}
+                            name="verifyPassword"
+                            label="Verify Password"
+                            type="password"
+                            id="verifyPassword"
+                            autoComplete="current-password"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            fullWidth
+                            onClick={signup}
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign up
+                        </Button>
+                        <Snackbar
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">{err}</span>}
+                            action={[
+                                <IconButton
+                                    key="close"
+                                    aria-label="close"
+                                    color="inherit"
+                                    className={classes.close}
+                                    onClick={handleClose}
+                                >
+                                    <CloseIcon />
+                                </IconButton>,
+                            ]}
+                        />
 
-    {/* <Grid container>
+                        {/* <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
                                     Forgot password?
@@ -217,11 +232,11 @@ export default function SignInSide(props) {
                                     Have an account</Link>
                             </Grid>
                         </Grid> */}
-<Box mt={5}>
-        </Box>
-        </form>
-        </div>
+                        <Box mt={5}>
+                        </Box>
+                    </form>
+                </div>
+            </Grid>
         </Grid>
-        </Grid>
-        </div>);
+    </div>);
 }
