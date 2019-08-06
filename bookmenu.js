@@ -1,25 +1,19 @@
-import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import firebase from "firebase"
+import React from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import firebase from "firebase";
 
-const options = [
-  'Add to my books',
-  'Read',
-  'Will read',
-  'Reading now',
-];
+const options = ["Add to my books", "Read", "Will read", "Reading now"];
 
 const ITEM_HEIGHT = 48;
 
 export default function BookMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const user = firebase.auth().currentUser
+  const user = firebase.auth().currentUser;
   const db = firebase.firestore();
-  
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -29,18 +23,34 @@ export default function BookMenu() {
     setAnchorEl(null);
   }
   function handleMyBooks() {
-      
-    const userinfo = db.collection("userinfo").doc(user.uid)
+    const userinfo = db.collection("userinfo").doc(user.uid);
     userinfo.update({
-        myBooks: firebase.firestore.FieldValue.arrayUnion("254")
-    })
-   
+      myBooks: firebase.firestore.FieldValue.arrayUnion("ISBN")
+    });
     setAnchorEl(null);
-  }function handleRead() {
+  }
+  function handleRead() {
+    const userinfo = db.collection("userinfo").doc(user.uid);
+    userinfo.update({
+      myBooks: firebase.firestore.FieldValue.arrayUnion("ISBN"),
+      read: firebase.firestore.FieldValue.arrayUnion("ISBN")
+    });
     setAnchorEl(null);
-  }function handleWillRead() {
+  }
+  function handleWillRead() {
+    const userinfo = db.collection("userinfo").doc(user.uid);
+    userinfo.update({
+      myBooks: firebase.firestore.FieldValue.arrayUnion("ISBN"),
+      willRead: firebase.firestore.FieldValue.arrayUnion("ISBN")
+    });
     setAnchorEl(null);
-  }function handleReading() {
+  }
+  function handleReading() {
+    const userinfo = db.collection("userinfo").doc(user.uid);
+    userinfo.update({
+      myBooks: firebase.firestore.FieldValue.arrayUnion("ISBN2"),
+      reading: firebase.firestore.FieldValue.arrayUnion("ISBN2")
+    });
     setAnchorEl(null);
   }
 
@@ -63,22 +73,34 @@ export default function BookMenu() {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: 200,
-          },
+            width: 200
+          }
         }}
       >
-           <MenuItem key={'mybooks'} selected={'Add to my books'} onClick={handleMyBooks}>
-            {'Add to my books'}
-          </MenuItem>
-          {/* <MenuItem key={'read'} selected={option === 'Read'} onClick={handleRead}>
-            {option}
-          </MenuItem>
-          <MenuItem key={"willRead"} selected={option === 'Will read'} onClick={handleWillRead}>
-            {option}
-          </MenuItem>
-          <MenuItem key={"reading"} selected={option === 'Reading now'} onClick={handleReading}>
-            {option}
-          </MenuItem> */}
+        <MenuItem
+          key={"mybooks"}
+          selected={"Add to my books"}
+          onClick={handleMyBooks}
+        >
+          {"Add to my books"}
+        </MenuItem>
+        <MenuItem key={"read"} selected={"Read"} onClick={handleRead}>
+          {"Read"}
+        </MenuItem>
+        <MenuItem
+          key={"willRead"}
+          selected={"Will read"}
+          onClick={handleWillRead}
+        >
+          {"Will Read"}
+        </MenuItem>
+        <MenuItem
+          key={"reading"}
+          selected={"Reading now"}
+          onClick={handleReading}
+        >
+          {"Reading Now"}
+        </MenuItem>
       </Menu>
     </div>
   );
